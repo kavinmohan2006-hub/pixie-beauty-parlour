@@ -21,7 +21,7 @@ export const Testimonials: React.FC = () => {
   
   useEffect(() => {
     const fetchReviews = async () => {
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('reviews')
         .select('*')
         .gte('rating', 4)
