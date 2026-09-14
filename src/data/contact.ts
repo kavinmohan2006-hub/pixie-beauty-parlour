@@ -17,7 +17,7 @@ export const BUSINESS = {
     line4: 'நீடாமங்கலம்.',
     city: 'Needamangalam',
     googleMapsUrl:
-      'https://www.google.com/maps/search/Needamangalam+Tamil+Nadu',
+      'https://www.google.com/maps/search/SBI+ATM,+Anna+Salai,+Needamangalam,+Tamil+Nadu',
   },
 
   phones: [

@@ -161,7 +161,7 @@ export const Contact: React.FC = () => {
             >
               <iframe
                 title="Pixie Beauty Parlour Location in Needamangalam"
-                src="https://maps.google.com/maps?q=Needamangalam,Tamil+Nadu,India&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                src="https://maps.google.com/maps?q=SBI+ATM,+Anna+Salai,+Needamangalam,+Tamil+Nadu&t=&z=16&ie=UTF8&iwloc=&output=embed"
                 className="w-full h-full border-0"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
