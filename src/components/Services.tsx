@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MessageCircle } from 'lucide-react';
-import { SERVICES, SERVICE_CATEGORIES, Service } from '../data/services';
+import { SERVICES, SERVICE_CATEGORIES, type Service } from '../data/services';
 import { getWhatsAppUrl } from '../data/contact';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import { supabase } from '../lib/supabase';
