@@ -24,7 +24,8 @@ const DEFAULT_SERVICE_OFFERS = [
 const ADMIN_PASSWORD = import.meta.env.VITE_ADMIN_PASSWORD;
 
 interface Booking {
-  id: number; // assumes primary key
+  id: number;
+  created_at?: string;
   customer_name: string;
   customer_phone: string;
   customer_whatsapp?: string;
@@ -48,6 +49,7 @@ export const AdminPortal: React.FC = () => {
   const [authorized, setAuthorized] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
   const [authError, setAuthError] = useState('');
+  const [activeTab, setActiveTab] = useState<'appointments' | 'store' | 'maintenance' | 'services'>('appointments');
 
   // Booking data state
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -62,9 +64,6 @@ export const AdminPortal: React.FC = () => {
   const [editingOfferId, setEditingOfferId] = useState<number | null>(null);
   const [offerForm, setOfferForm] = useState({ title: '', description: '', price: '' });
   const [seedingOffers, setSeedingOffers] = useState(false);
-
-  // UI tab state
-  const [activeTab, setActiveTab] = useState<'appointments' | 'store' | 'maintenance' | 'offers'>('appointments');
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -129,7 +128,7 @@ export const AdminPortal: React.FC = () => {
 
   const startEditPrice = (id: number, currentPrice?: number) => {
     setEditingId(id);
-    setEditPrice(currentPrice ? String(currentPrice) : '');
+    setEditPrice(currentPrice !== undefined && currentPrice !== null ? String(currentPrice) : '');
   };
 
   const savePrice = async (id: number) => {
@@ -149,26 +148,23 @@ export const AdminPortal: React.FC = () => {
     setEditingId(null);
   };
 
-  // ----- Offers CRUD -----
-  const startEditOffer = (offer: Offer) => {
-    setEditingOfferId(offer.id);
-    setOfferForm({
-      title: offer.title,
-      description: offer.description,
-      price: String(offer.price)
-    });
+  // ---------- Offers handlers ----------
+  const startEditOffer = (o: Offer) => {
+    setEditingOfferId(o.id);
+    setOfferForm({ title: o.title, description: o.description, price: String(o.price) });
   };
 
   const saveOffer = async () => {
+    if (!offerForm.title || !offerForm.price) {
+      alert('Title and price are required');
+      return;
+    }
     const priceVal = parseFloat(offerForm.price);
-    if (!offerForm.title.trim()) {
-      alert('Title is required');
+    if (isNaN(priceVal)) {
+      alert('Invalid price');
       return;
     }
-    if (isNaN(priceVal) || priceVal < 0) {
-      alert('Price must be a valid positive number');
-      return;
-    }
+
     if (editingOfferId) {
       const { error } = await supabase
         .from('offers')
@@ -182,8 +178,8 @@ export const AdminPortal: React.FC = () => {
         console.error('Error updating offer:', error);
       } else {
         setOffers(prev =>
-          prev.map(o =>
-            o.id === editingOfferId ? { ...o, title: offerForm.title, description: offerForm.description, price: priceVal } : o
+          prev.map(item =>
+            item.id === editingOfferId ? { ...item, title: offerForm.title, description: offerForm.description, price: priceVal } : item
           )
         );
         window.dispatchEvent(new Event('offersUpdated'));
@@ -228,6 +224,7 @@ export const AdminPortal: React.FC = () => {
       alert('Error seeding offers. Check console for details.');
     } else {
       setOffers(prev => [...prev, ...(data as unknown as Offer[])]);
+      window.dispatchEvent(new Event('offersUpdated'));
     }
     setSeedingOffers(false);
   };
@@ -253,11 +250,12 @@ export const AdminPortal: React.FC = () => {
       alert('No appointments to export');
       return;
     }
-    const headers = ['ID', 'Customer Name', 'Phone', 'WhatsApp', 'Service', 'Date', 'Time', 'Message', 'Price (Rs)'];
+    const headers = ['ID', 'Booked On (Date & Time)', 'Customer Name', 'Phone', 'WhatsApp', 'Service', 'Appointment Date', 'Appointment Time', 'Message', 'Price (Rs)'];
     const csvRows = [
       headers.join(','),
       ...bookings.map(b => [
         b.id,
+        `"${b.created_at ? new Date(b.created_at).toLocaleString('en-IN') : 'N/A'}"`,
         `"${(b.customer_name || '').replace(/"/g, '""')}"`,
         `"${b.customer_phone || ''}"`,
         `"${b.customer_whatsapp || ''}"`,
