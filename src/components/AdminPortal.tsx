@@ -1,7 +1,6 @@
-// Updated AdminPortal component with offers management
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { X, Edit, Check, Phone, Plus, Layers } from 'lucide-react';
+import { X, Edit, Check, Phone, Plus, Layers, Download } from 'lucide-react';
 import { BUSINESS } from '../data/contact';
 
 // Default service items to seed into Offers
@@ -187,6 +186,7 @@ export const AdminPortal: React.FC = () => {
             o.id === editingOfferId ? { ...o, title: offerForm.title, description: offerForm.description, price: priceVal } : o
           )
         );
+        window.dispatchEvent(new Event('offersUpdated'));
       }
     } else {
       const { data, error } = await supabase
@@ -197,6 +197,7 @@ export const AdminPortal: React.FC = () => {
         console.error('Error creating offer:', error);
       } else {
         setOffers(prev => [...prev, ...(data as unknown as Offer[])]);
+        window.dispatchEvent(new Event('offersUpdated'));
       }
     }
     setEditingOfferId(null);
@@ -210,6 +211,7 @@ export const AdminPortal: React.FC = () => {
       console.error('Error deleting offer:', error);
     } else {
       setOffers(prev => prev.filter(o => o.id !== id));
+      window.dispatchEvent(new Event('offersUpdated'));
     }
   };
 
@@ -246,6 +248,37 @@ export const AdminPortal: React.FC = () => {
     </div>
   );
 
+  const exportToCSV = () => {
+    if (bookings.length === 0) {
+      alert('No appointments to export');
+      return;
+    }
+    const headers = ['ID', 'Customer Name', 'Phone', 'WhatsApp', 'Service', 'Date', 'Time', 'Message', 'Price (Rs)'];
+    const csvRows = [
+      headers.join(','),
+      ...bookings.map(b => [
+        b.id,
+        `"${(b.customer_name || '').replace(/"/g, '""')}"`,
+        `"${b.customer_phone || ''}"`,
+        `"${b.customer_whatsapp || ''}"`,
+        `"${(b.service || '').replace(/"/g, '""')}"`,
+        `"${b.booking_date || ''}"`,
+        `"${b.booking_time || ''}"`,
+        `"${(b.notes || '').replace(/"/g, '""')}"`,
+        b.price || 0
+      ].join(','))
+    ];
+    const blob = new Blob([csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `pixie_appointments_${new Date().toISOString().split('T')[0]}.csv`);
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
+
   const renderAppointments = () => {
     const totalRevenue = bookings.reduce((sum, b) => sum + (parseFloat(b.price as any) || 0), 0);
     return (
@@ -253,9 +286,18 @@ export const AdminPortal: React.FC = () => {
         <h2 className="font-display text-3xl sm:text-4xl font-bold text-center mb-4" style={{ color: '#0f0f2d' }}>
           Admin Portal – Appointments
         </h2>
-        <div className="text-right mb-4">
-          <span className="font-semibold">Total Revenue: </span>
-          <span className="text-pink-600">₹{totalRevenue.toFixed(2)}</span>
+        <div className="flex flex-col sm:flex-row justify-between items-center mb-4 gap-4">
+          <button 
+            onClick={exportToCSV}
+            className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white text-sm font-semibold rounded-lg hover:bg-green-700 transition-all shadow-md"
+          >
+            <Download size={16} />
+            Export to Excel (CSV)
+          </button>
+          <div className="text-right">
+            <span className="font-semibold">Total Revenue: </span>
+            <span className="text-pink-600 text-lg font-bold">₹{totalRevenue.toFixed(2)}</span>
+          </div>
         </div>
         {loading ? (
           <p className="text-center text-gray-500">Loading appointments…</p>

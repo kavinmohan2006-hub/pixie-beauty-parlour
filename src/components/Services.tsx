@@ -1,17 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MessageCircle } from 'lucide-react';
-import { SERVICES, SERVICE_CATEGORIES } from '../data/services';
+import { SERVICES, SERVICE_CATEGORIES, Service } from '../data/services';
 import { getWhatsAppUrl } from '../data/contact';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
+import { supabase } from '../lib/supabase';
 
 const SERVICE_IMAGES: Record<string, string> = {
-  // Locally generated high-quality images
   eyebrow:            '/images/services/eyebrow.jpg',
   haircut:            '/images/services/haircut.jpg',
   hairspa:            '/images/services/hairspa.jpg',
   facial:             '/images/services/facial.jpg',
   skincare:           '/images/services/skincare.jpg',
-  // Self-hosted local images for all services
   manicure:           '/images/services/manicure.jpg',
   pedicure:           '/images/services/pedicure.jpg',
   'party-makeup':     '/images/services/party_makeup.jpg',
@@ -23,9 +22,30 @@ const SERVICE_IMAGES: Record<string, string> = {
 
 export const Services: React.FC = () => {
   const [active, setActive] = useState('All');
+  const [servicesData, setServicesData] = useState<Service[]>(SERVICES);
   const [ref, isVisible]    = useScrollAnimation();
 
-  const filtered = active === 'All' ? SERVICES : SERVICES.filter(s => s.category === active);
+  useEffect(() => {
+    const fetchDynamicPrices = async () => {
+      const { data, error } = await supabase.from('offers').select('title, price');
+      if (data && !error) {
+        setServicesData(prevServices => 
+          prevServices.map(s => {
+            const dynamicOffer = data.find((dbOffer: any) => dbOffer.title === s.name);
+            return dynamicOffer ? { ...s, price: Number(dynamicOffer.price) } : s;
+          })
+        );
+      }
+    };
+    
+    fetchDynamicPrices();
+    
+    // Auto-update when admin changes price
+    window.addEventListener('offersUpdated', fetchDynamicPrices);
+    return () => window.removeEventListener('offersUpdated', fetchDynamicPrices);
+  }, []);
+
+  const filtered = active === 'All' ? servicesData : servicesData.filter(s => s.category === active);
 
   return (
     <section id="services" className="py-20 lg:py-28 relative overflow-hidden" style={{ background: '#fafafa' }}>
