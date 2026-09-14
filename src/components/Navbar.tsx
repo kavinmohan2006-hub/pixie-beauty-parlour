@@ -29,6 +29,26 @@ export const Navbar: React.FC = () => {
     document.querySelector(href)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  let clickCount = 0;
+  let clickTimeout: any;
+  
+  const handleLogoClick = () => {
+    scrollTo('#home');
+    
+    // Secret Admin Portal trigger (3 quick taps)
+    clickCount++;
+    clearTimeout(clickTimeout);
+    
+    if (clickCount >= 3) {
+      window.dispatchEvent(new Event('toggleAdmin'));
+      clickCount = 0;
+    } else {
+      clickTimeout = setTimeout(() => {
+        clickCount = 0;
+      }, 1000); // Reset after 1 second
+    }
+  };
+
   return (
     <>
       <header
@@ -44,7 +64,7 @@ export const Navbar: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
 
           {/* ── Logo ────────────────────────────────────── */}
-          <button onClick={() => scrollTo('#home')} className="flex items-center gap-2.5 group" aria-label="Go to homepage">
+          <button onClick={handleLogoClick} className="flex items-center gap-2.5 group" aria-label="Go to homepage">
             <div className="relative">
               <div
                 className="w-10 h-10 rounded-xl flex items-center justify-center shadow-lg"

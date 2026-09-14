@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { Navbar } from './components/Navbar';
 import { Hero } from './components/Hero';
 import { PromoBanner } from './components/PromoBanner';
@@ -17,6 +18,21 @@ import { FloatingButtons } from './components/FloatingButtons';
 import { AdminPortal } from './components/AdminPortal';
 
 function App() {
+  const [showAdmin, setShowAdmin] = useState(false);
+
+  useEffect(() => {
+    const handleToggleAdmin = () => {
+      setShowAdmin(prev => !prev);
+      if (!showAdmin) {
+        setTimeout(() => {
+          document.getElementById('admin')?.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    };
+    window.addEventListener('toggleAdmin', handleToggleAdmin);
+    return () => window.removeEventListener('toggleAdmin', handleToggleAdmin);
+  }, [showAdmin]);
+
   return (
     <div className="min-h-screen">
       {/* Navigation */}
@@ -37,7 +53,7 @@ function App() {
         <Feedback />
         <Appointment />
         <Contact />
-        <AdminPortal />
+        {showAdmin && <AdminPortal />}
       </main>
 
       {/* Footer */}
