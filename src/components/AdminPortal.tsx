@@ -235,14 +235,14 @@ export const AdminPortal: React.FC = () => {
 
   // ---------- Render helpers ----------
   const renderTabBar = () => (
-    <div className="flex space-x-2 mb-6 justify-center">
-      {(['appointments', 'store', 'maintenance', 'offers'] as const).map(tab => (
+    <div className="flex space-x-2 mb-6 justify-center flex-wrap gap-y-2">
+      {(['appointments', 'store', 'maintenance', 'services'] as const).map(tab => (
         <button
           key={tab}
           onClick={() => setActiveTab(tab)}
-          className={`px-4 py-2 rounded ${activeTab === tab ? 'bg-pink-600 text-white' : 'bg-gray-200 text-gray-700'}`}
+          className={`px-4 py-2 rounded capitalize ${activeTab === tab ? 'bg-pink-600 text-white' : 'bg-gray-200 text-gray-700'}`}
         >
-          {tab.charAt(0).toUpperCase() + tab.slice(1)}
+          {tab === 'services' ? 'Services & Prices' : tab}
         </button>
       ))}
     </div>
@@ -462,7 +462,7 @@ export const AdminPortal: React.FC = () => {
   const renderOffers = () => (
     <>
       <h2 className="font-display text-3xl sm:text-4xl font-bold text-center mb-4" style={{ color: '#0f0f2d' }}>
-        Promotional Offers
+        Admin Portal – Services & Prices
       </h2>
       <div className="max-w-2xl mx-auto mb-6">
         {/* Seed default services button */}
@@ -582,7 +582,7 @@ export const AdminPortal: React.FC = () => {
         {activeTab === 'appointments' && renderAppointments()}
         {activeTab === 'store' && renderStoreInfo()}
         {activeTab === 'maintenance' && renderMaintenance()}
-        {activeTab === 'offers' && renderOffers()}
+        {activeTab === 'services' && renderOffers()}
       </div>
     </section>
   );
