@@ -1,67 +1,26 @@
-import { useState, useEffect } from 'react';
-import { Navbar } from './components/Navbar';
-import { Hero } from './components/Hero';
-import { PromoBanner } from './components/PromoBanner';
-import { About } from './components/About';
-import { StoreImages } from './components/StoreImages';
-import { Services } from './components/Services';
-import { Bridal } from './components/Bridal';
-import { Gallery } from './components/Gallery';
-import { OurWorks } from './components/OurWorks';
-import { WhyChooseUs } from './components/WhyChooseUs';
-import { Testimonials } from './components/Testimonials';
-import { Appointment } from './components/Appointment';
-import { Contact } from './components/Contact';
-import { Footer } from './components/Footer';
-import { Feedback } from './components/Feedback';
-import { FloatingButtons } from './components/FloatingButtons';
-import { AdminPortal } from './components/AdminPortal';
+﻿import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Layout } from './pages/Layout';
+import { HomePage } from './pages/HomePage';
+import { AboutPage } from './pages/AboutPage';
+import { ServicesPage } from './pages/ServicesPage';
+import { BridalPage } from './pages/BridalPage';
+import { WorksPage } from './pages/WorksPage';
+import { ContactPage } from './pages/ContactPage';
 
 function App() {
-  const [showAdmin, setShowAdmin] = useState(false);
-
-  useEffect(() => {
-    const handleToggleAdmin = () => {
-      setShowAdmin(prev => !prev);
-      if (!showAdmin) {
-        setTimeout(() => {
-          document.getElementById('admin')?.scrollIntoView({ behavior: 'smooth' });
-        }, 100);
-      }
-    };
-    window.addEventListener('toggleAdmin', handleToggleAdmin);
-    return () => window.removeEventListener('toggleAdmin', handleToggleAdmin);
-  }, [showAdmin]);
-
   return (
-    <div className="min-h-screen">
-      {/* Navigation */}
-      <Navbar />
-
-      {/* Main content */}
-      <main>
-        <Hero />
-        <PromoBanner />
-        <About />
-        <StoreImages />
-        <Services />
-        <Bridal />
-        <Gallery />
-        <OurWorks />
-        <WhyChooseUs />
-        <Testimonials />
-        <Feedback />
-        <Appointment />
-        <Contact />
-        {showAdmin && <AdminPortal />}
-      </main>
-
-      {/* Footer */}
-      <Footer />
-
-      {/* Floating action buttons — always visible */}
-      <FloatingButtons />
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route index element={<HomePage />} />
+          <Route path="about" element={<AboutPage />} />
+          <Route path="services" element={<ServicesPage />} />
+          <Route path="bridal" element={<BridalPage />} />
+          <Route path="works" element={<WorksPage />} />
+          <Route path="contact" element={<ContactPage />} />
+        </Route>
+      </Routes>
+    </BrowserRouter>
   );
 }
 
