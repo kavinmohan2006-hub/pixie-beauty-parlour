@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, Sparkles, Phone } from 'lucide-react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { BUSINESS } from '../data/contact';
@@ -28,22 +28,22 @@ export const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, [location.pathname]);
 
-  let clickCount = 0;
-  let clickTimeout: any;
+  const clickCount = useRef(0);
+  const clickTimeout = useRef<any>(null);
   
   const handleLogoClick = () => {
     navigate('/');
     
     // Secret Admin Portal trigger (3 quick taps)
-    clickCount++;
-    clearTimeout(clickTimeout);
+    clickCount.current++;
+    clearTimeout(clickTimeout.current);
     
-    if (clickCount >= 3) {
+    if (clickCount.current >= 3) {
       window.dispatchEvent(new Event('toggleAdmin'));
-      clickCount = 0;
+      clickCount.current = 0;
     } else {
-      clickTimeout = setTimeout(() => {
-        clickCount = 0;
+      clickTimeout.current = setTimeout(() => {
+        clickCount.current = 0;
       }, 1000); // Reset after 1 second
     }
   };
