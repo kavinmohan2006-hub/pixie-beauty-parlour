@@ -56,12 +56,12 @@ export const Navbar: React.FC = () => {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${
-          isSolid ? 'py-2 shadow-xl shadow-black/10' : 'py-4'
+          isSolid ? 'py-2 shadow-xl shadow-black/20' : 'py-4'
         }`}
         style={{
-          background: isSolid ? 'rgba(255,255,255,0.96)' : 'transparent',
+          background: isSolid ? 'rgba(15, 15, 45, 0.95)' : 'transparent',
           backdropFilter: isSolid ? 'blur(20px)' : 'none',
-          borderBottom: isSolid ? '1px solid rgba(233,30,140,0.08)' : 'none',
+          borderBottom: isSolid ? '1px solid rgba(233,30,140,0.15)' : 'none',
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -82,12 +82,12 @@ export const Navbar: React.FC = () => {
             </div>
             <div className="leading-none text-left">
               <div
-                className={`font-display text-xl font-bold tracking-wide transition-colors duration-300 ${isSolid ? 'text-primary' : 'text-white'}`}
-                style={{ fontFamily: 'var(--font-display)', color: isSolid ? '#e91e8c' : 'white' }}
+                className="font-display text-xl font-bold tracking-wide transition-colors duration-300 text-white"
+                style={{ fontFamily: 'var(--font-display)' }}
               >
                 PIXIE
               </div>
-              <div className={`text-[9px] font-semibold tracking-[.22em] uppercase transition-colors duration-300 ${isSolid ? 'text-gray-400' : 'text-white/60'}`}>
+              <div className="text-[9px] font-semibold tracking-[.22em] uppercase transition-colors duration-300 text-white/60">
                 Beauty Parlour
               </div>
             </div>
@@ -99,9 +99,9 @@ export const Navbar: React.FC = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`relative px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 group ${
-                  isSolid ? 'text-gray-900 hover:text-primary' : 'text-white/85 hover:text-white'
-                } ${location.pathname === link.path ? 'text-primary' : ''}`}
+                className={`relative px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 group text-white/85 hover:text-white ${
+                  location.pathname === link.path ? 'text-primary' : ''
+                }`}
               >
                 {link.label}
                 <span
@@ -136,9 +136,7 @@ export const Navbar: React.FC = () => {
             {/* Mobile menu toggle */}
             <button
               onClick={() => setOpen(!open)}
-              className={`lg:hidden p-2.5 rounded-xl transition-colors ${
-                isSolid ? 'text-gray-600 hover:bg-gray-100' : 'text-white hover:bg-white/10'
-              }`}
+              className="lg:hidden p-2.5 rounded-xl transition-colors text-white hover:bg-white/10"
               aria-label={open ? 'Close menu' : 'Open menu'}
             >
               {open ? <X size={20} /> : <Menu size={20} />}
@@ -153,9 +151,9 @@ export const Navbar: React.FC = () => {
           open ? 'opacity-100 visible' : 'opacity-0 invisible'
         }`}
       >
-        <div className="absolute inset-0 bg-white/95 backdrop-blur-md" onClick={() => setOpen(false)} />
+        <div className="absolute inset-0 bg-[#0f0f2d]/95 backdrop-blur-md" onClick={() => setOpen(false)} />
         <div
-          className={`absolute top-0 right-0 bottom-0 w-[85%] max-w-sm bg-white shadow-2xl transition-transform duration-500 delay-100 ease-[0.22,1,0.36,1] flex flex-col ${
+          className={`absolute top-0 right-0 bottom-0 w-[85%] max-w-sm bg-[#1a1a3e] shadow-2xl transition-transform duration-500 delay-100 ease-[0.22,1,0.36,1] flex flex-col ${
             open ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
@@ -166,7 +164,7 @@ export const Navbar: React.FC = () => {
                   key={link.path}
                   to={link.path}
                   onClick={handleLinkClick}
-                  className={`text-2xl font-display font-medium text-gray-800 hover:text-primary transition-all duration-300 ${
+                  className={`text-2xl font-display font-medium text-white/90 hover:text-primary transition-all duration-300 ${
                     open ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
                   }`}
                   style={{ transitionDelay: `${200 + i * 50}ms` }}
@@ -177,17 +175,17 @@ export const Navbar: React.FC = () => {
             </nav>
 
             <div
-              className={`mt-12 pt-10 border-t border-gray-100 transition-all duration-500 ${
+              className={`mt-12 pt-10 border-t border-white/10 transition-all duration-500 ${
                 open ? 'translate-y-0 opacity-100' : 'translate-y-8 opacity-0'
               }`}
               style={{ transitionDelay: `${200 + NAV_LINKS.length * 50 + 100}ms` }}
             >
-              <div className="text-[11px] font-bold tracking-widest text-gray-400 uppercase mb-5">
+              <div className="text-[11px] font-bold tracking-widest text-white/40 uppercase mb-5">
                 Contact Us
               </div>
               <div className="flex flex-col gap-4">
-                <a href={`tel:` + BUSINESS.phones[0].number} className="flex items-center gap-3 text-sm font-medium text-gray-600">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+                <a href={`tel:` + BUSINESS.phones[0].number} className="flex items-center gap-3 text-sm font-medium text-white/80">
+                  <div className="w-10 h-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
                     <Phone size={16} />
                   </div>
                   {BUSINESS.phones[0].number}
@@ -195,7 +193,7 @@ export const Navbar: React.FC = () => {
               </div>
             </div>
           </div>
-          <div className="p-8 pb-10">
+          <div className="p-8 pb-10 border-t border-white/10">
             <button
               onClick={() => {
                 handleLinkClick();
