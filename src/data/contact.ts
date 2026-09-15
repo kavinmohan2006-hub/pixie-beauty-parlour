@@ -20,12 +20,15 @@ export const BUSINESS = {
       'https://www.google.com/maps/search/SBI+ATM,+Anna+Salai,+Needamangalam,+Tamil+Nadu',
   },
 
-  phones: [
-    { number: '7418574373', label: 'Store Admin' },
+    phones: [
+    { number: '9944751199', label: 'Store Admin' },
+    { number: '7418574373', label: 'Booking' },
+    { number: '7418650972', label: 'Contact' },
+    { number: '9944559491', label: 'Support' },
   ],
 
   // Primary WhatsApp number (include country code without +)
-  whatsapp: '917418574373',
+  whatsapp: '919944751199',
   
   // Business Email
   email: 'gkalai24@gmail.com',
@@ -52,3 +55,4 @@ export const WHATSAPP_GENERAL_MSG =
 
 export const WHATSAPP_BRIDAL_MSG =
   'Hello Pixie Beauty Parlour, I am interested in your Bridal Package. Please share details.';
+
