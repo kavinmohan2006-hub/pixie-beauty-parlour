@@ -95,8 +95,8 @@ export const Navbar: React.FC = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`relative px-4 py-2 text-[13px] font-medium rounded-lg transition-all duration-200 group ${
-                  scrolled || location.pathname !== '/' ? 'text-gray-600 hover:text-primary' : 'text-white/85 hover:text-white'
+                className={`relative px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 group ${
+                  scrolled || location.pathname !== '/' ? 'text-gray-900 hover:text-primary' : 'text-white/85 hover:text-white'
                 } ${location.pathname === link.path ? 'text-primary font-bold' : ''}`}
               >
                 {link.label}
