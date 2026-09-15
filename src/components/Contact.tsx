@@ -1,4 +1,4 @@
-﻿import React from 'react';
+import React from 'react';
 import { Phone, MessageCircle, MapPin, Navigation, Clock, ExternalLink } from 'lucide-react';
 import { BUSINESS, getWhatsAppUrl, WHATSAPP_GENERAL_MSG } from '../data/contact';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
@@ -204,7 +204,7 @@ export const Contact: React.FC = () => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-xs truncate" style={{ color: '#0f0f2d' }}>Pixie Beauty Parlour</p>
-                  <p className="text-gray-400 text-[11px]" lang="ta">R.P. Complex, à®¨à¯€à®Ÿà®¾à®®à®™à¯à®•à®²à®®à¯</p>
+                  <p className="text-gray-400 text-[11px]" lang="ta">{BUSINESS.address.line1} {BUSINESS.address.city}</p>
                 </div>
                 <a
                   href={BUSINESS.address.googleMapsUrl}
