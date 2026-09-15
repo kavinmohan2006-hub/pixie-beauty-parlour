@@ -18,11 +18,15 @@ export const Navbar: React.FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
+  const isSolid = scrolled || location.pathname !== '/';
+
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', onScroll, { passive: true });
+    // Check initial scroll
+    onScroll();
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [location.pathname]);
 
   let clickCount = 0;
   let clickTimeout: any;
@@ -52,12 +56,12 @@ export const Navbar: React.FC = () => {
     <>
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${
-          scrolled ? 'py-2 shadow-xl shadow-black/10' : 'py-4'
+          isSolid ? 'py-2 shadow-xl shadow-black/10' : 'py-4'
         }`}
         style={{
-          background: scrolled ? 'rgba(255,255,255,0.96)' : 'transparent',
-          backdropFilter: scrolled ? 'blur(20px)' : 'none',
-          borderBottom: scrolled ? '1px solid rgba(233,30,140,0.08)' : 'none',
+          background: isSolid ? 'rgba(255,255,255,0.96)' : 'transparent',
+          backdropFilter: isSolid ? 'blur(20px)' : 'none',
+          borderBottom: isSolid ? '1px solid rgba(233,30,140,0.08)' : 'none',
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
@@ -78,12 +82,12 @@ export const Navbar: React.FC = () => {
             </div>
             <div className="leading-none text-left">
               <div
-                className={`font-display text-xl font-bold tracking-wide transition-colors duration-300 ${scrolled ? 'text-primary' : 'text-white'}`}
-                style={{ fontFamily: 'var(--font-display)', color: scrolled ? '#e91e8c' : 'white' }}
+                className={`font-display text-xl font-bold tracking-wide transition-colors duration-300 ${isSolid ? 'text-primary' : 'text-white'}`}
+                style={{ fontFamily: 'var(--font-display)', color: isSolid ? '#e91e8c' : 'white' }}
               >
                 PIXIE
               </div>
-              <div className={`text-[9px] font-semibold tracking-[.22em] uppercase transition-colors duration-300 ${scrolled ? 'text-gray-400' : 'text-white/60'}`}>
+              <div className={`text-[9px] font-semibold tracking-[.22em] uppercase transition-colors duration-300 ${isSolid ? 'text-gray-400' : 'text-white/60'}`}>
                 Beauty Parlour
               </div>
             </div>
@@ -96,8 +100,8 @@ export const Navbar: React.FC = () => {
                 key={link.path}
                 to={link.path}
                 className={`relative px-4 py-2 text-sm font-semibold rounded-lg transition-all duration-200 group ${
-                  scrolled || location.pathname !== '/' ? 'text-gray-900 hover:text-primary' : 'text-white/85 hover:text-white'
-                } ${location.pathname === link.path ? 'text-primary font-bold' : ''}`}
+                  isSolid ? 'text-gray-900 hover:text-primary' : 'text-white/85 hover:text-white'
+                } ${location.pathname === link.path ? 'text-primary' : ''}`}
               >
                 {link.label}
                 <span
@@ -111,7 +115,7 @@ export const Navbar: React.FC = () => {
           {/* ── CTA + hamburger ─────────────────────────── */}
           <div className="flex items-center gap-3">
             {/* Phone (scrolled only) */}
-            {(scrolled || location.pathname !== '/') && (
+            {isSolid && (
               <a
                 href={`tel:` + BUSINESS.phones[0].number}
                 className="hidden sm:flex items-center gap-1.5 text-xs font-semibold text-primary hover:text-primary-dark transition-colors"
@@ -133,7 +137,7 @@ export const Navbar: React.FC = () => {
             <button
               onClick={() => setOpen(!open)}
               className={`lg:hidden p-2.5 rounded-xl transition-colors ${
-                scrolled || location.pathname !== '/' ? 'text-gray-600 hover:bg-gray-100' : 'text-white hover:bg-white/10'
+                isSolid ? 'text-gray-600 hover:bg-gray-100' : 'text-white hover:bg-white/10'
               }`}
               aria-label={open ? 'Close menu' : 'Open menu'}
             >
