@@ -1,20 +1,20 @@
-// ============================================================
-// BUSINESS INFORMATION — Edit this file to update contact details
+﻿// ============================================================
+// BUSINESS INFORMATION â€” Edit this file to update contact details
 // ============================================================
 
 export const BUSINESS = {
   name: 'Pixie Beauty Parlour',
   tagline: 'Beauty Parlour & Women\'s Corner',
-  tamilTagline: 'நீடாமங்கலம்',
+  tamilTagline: 'à®¨à¯€à®Ÿà®¾à®®à®™à¯à®•à®²à®®à¯',
   heroHeadline: 'Your Beauty, Your Confidence',
   heroSubtext:
     'Professional beauty and personal care services specially designed for women.',
 
   address: {
     line1: 'R.P. Complex,',
-    line2: 'SBI ATM எதிரில்,',
-    line3: 'அண்ணா சாலை,',
-    line4: 'நீடாமங்கலம்.',
+    line2: 'SBI ATM à®Žà®¤à®¿à®°à®¿à®²à¯,',
+    line3: 'à®…à®£à¯à®£à®¾ à®šà®¾à®²à¯ˆ,',
+    line4: 'à®¨à¯€à®Ÿà®¾à®®à®™à¯à®•à®²à®®à¯.',
     city: 'Needamangalam',
     googleMapsUrl:
       'https://www.google.com/maps/search/SBI+ATM,+Anna+Salai,+Needamangalam,+Tamil+Nadu',
@@ -28,11 +28,11 @@ export const BUSINESS = {
   whatsapp: '917418574373',
   
   // Business Email
-  email: 'kavinmohan2006@gmail.com',
+  email: 'gkalai24@gmail.com',
 
-  // Business hours — update when known
+  // Business hours â€” update when known
   hours: {
-    weekdays: 'Monday – Saturday: 9:00 AM - 8:00 PM',
+    weekdays: 'Monday â€“ Saturday: 9:00 AM - 8:00 PM',
     sunday: 'Sunday: By Appointment',
     note: 'Call us to confirm availability',
   },

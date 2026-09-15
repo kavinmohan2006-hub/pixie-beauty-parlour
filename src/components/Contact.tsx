@@ -1,4 +1,4 @@
-import React from 'react';
+﻿import React from 'react';
 import { Phone, MessageCircle, MapPin, Navigation, Clock, ExternalLink } from 'lucide-react';
 import { BUSINESS, getWhatsAppUrl, WHATSAPP_GENERAL_MSG } from '../data/contact';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
@@ -15,11 +15,11 @@ export const Contact: React.FC = () => {
 
         {/* Heading */}
         <div ref={ref} className={`text-center mb-14 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <span className="eyebrow-pink mb-4 inline-flex">✦ Find Us</span>
+          <span className="eyebrow-pink mb-4 inline-flex">âœ¦ Find Us</span>
           <h2 className="font-display text-4xl sm:text-5xl font-bold" style={{ color: '#0f0f2d', fontFamily: 'var(--font-display)' }}>
             Visit <span className="pink-text">Pixie Beauty Parlour</span>
           </h2>
-          <div className="divider-ornament mt-5 mb-5 max-w-xs mx-auto"><span className="text-gold text-lg">✦</span></div>
+          <div className="divider-ornament mt-5 mb-5 max-w-xs mx-auto"><span className="text-gold text-lg">âœ¦</span></div>
           <p className="text-gray-500 text-base sm:text-lg max-w-xl mx-auto leading-relaxed">
             We'd love to welcome you to our salon. Find us at the address below or reach out via phone or WhatsApp.
           </p>
@@ -91,6 +91,25 @@ export const Contact: React.FC = () => {
                 </div>
 
                 <div className="h-px" style={{ background: 'rgba(233,30,140,0.07)' }} />
+
+                                <div className="h-px" style={{ background: 'rgba(233,30,140,0.07)' }} />
+
+                {/* Email */}
+                <div className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                    style={{ background: '#fce4ec' }}>
+                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#e91e8c" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                      <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-[13px] text-gray-700 mb-1">Email</p>
+                    <a href={`mailto:${BUSINESS.email}`} className="text-gray-500 text-sm hover:text-primary transition-colors font-medium">
+                      {BUSINESS.email}
+                    </a>
+                  </div>
+                </div>
 
                 {/* Hours */}
                 <div className="flex items-start gap-4">
@@ -165,7 +184,7 @@ export const Contact: React.FC = () => {
                 className="w-full h-full border-0"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                aria-label="Map of Needamangalam, Tamil Nadu — approximate location of Pixie Beauty Parlour"
+                aria-label="Map of Needamangalam, Tamil Nadu â€” approximate location of Pixie Beauty Parlour"
               />
               {/* Map overlay card */}
               <div
@@ -185,7 +204,7 @@ export const Contact: React.FC = () => {
                 </div>
                 <div className="flex-1 min-w-0">
                   <p className="font-bold text-xs truncate" style={{ color: '#0f0f2d' }}>Pixie Beauty Parlour</p>
-                  <p className="text-gray-400 text-[11px]" lang="ta">R.P. Complex, நீடாமங்கலம்</p>
+                  <p className="text-gray-400 text-[11px]" lang="ta">R.P. Complex, à®¨à¯€à®Ÿà®¾à®®à®™à¯à®•à®²à®®à¯</p>
                 </div>
                 <a
                   href={BUSINESS.address.googleMapsUrl}
@@ -205,3 +224,5 @@ export const Contact: React.FC = () => {
     </section>
   );
 };
+
+
