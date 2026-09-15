@@ -32,7 +32,7 @@ export const Layout: React.FC = () => {
     <div className="min-h-screen flex flex-col">
       <Navbar />
       
-      <main className="flex-grow pt-[72px]">
+      <main className={`flex-grow ${location.pathname === '/' ? '' : 'pt-[72px]'}`}>
         <Outlet />
       </main>
 
