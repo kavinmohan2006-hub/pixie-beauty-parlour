@@ -19,7 +19,7 @@ export const BUSINESS = {
   },
 
   phones: [
-    { number: '9944751199', label: 'Admin' },
+    { number: '9944751199', label: 'Primary Admin' },
     { number: '7418574373', label: 'Admin' },
     { number: '7418650972', label: 'Contact' },
     { number: '9944559491', label: 'Support' },
