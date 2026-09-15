@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { X, Edit, Check, Phone, Plus, Layers, Download } from 'lucide-react';
+import { X, Edit, Check, Phone, Plus, Layers, Download, Trash2 } from 'lucide-react';
 import { BUSINESS } from '../data/contact';
 
 // Default service items to seed into Offers
@@ -282,7 +282,7 @@ export const AdminPortal: React.FC = () => {
     return (
       <>
         <h2 className="font-display text-3xl sm:text-4xl font-bold text-center mb-4" style={{ color: '#0f0f2d' }}>
-          Admin Portal – Appointments
+          Admin Portal â€“ Appointments
         </h2>
         <div className="flex flex-col sm:flex-row justify-between items-center mb-4 gap-4">
           <button 
@@ -294,11 +294,11 @@ export const AdminPortal: React.FC = () => {
           </button>
           <div className="text-right">
             <span className="font-semibold">Total Revenue: </span>
-            <span className="text-pink-600 text-lg font-bold">₹{totalRevenue.toFixed(2)}</span>
+            <span className="text-pink-600 text-lg font-bold">â‚¹{totalRevenue.toFixed(2)}</span>
           </div>
         </div>
         {loading ? (
-          <p className="text-center text-gray-500">Loading appointments…</p>
+          <p className="text-center text-gray-500">Loading appointmentsâ€¦</p>
         ) : bookings.length === 0 ? (
           <p className="text-center text-gray-500">No appointments found.</p>
         ) : (
@@ -313,7 +313,7 @@ export const AdminPortal: React.FC = () => {
                   <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Date</th>
                   <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Time</th>
                   <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Message</th>
-                  <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Price (₹)</th>
+                  <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Price (â‚¹)</th>
                   <th className="px-4 py-2 text-center text-sm font-medium text-gray-600">Actions</th>
                 </tr>
               </thead>
@@ -332,12 +332,12 @@ export const AdminPortal: React.FC = () => {
                           rel="noopener noreferrer"
                           className="text-green-600 hover:underline"
                         >{b.customer_whatsapp}</a>
-                      ) : '—'}
+                      ) : 'â€”'}
                     </td>
                     <td className="px-4 py-2 text-sm text-gray-700">{b.service}</td>
                     <td className="px-4 py-2 text-sm text-gray-700">{b.booking_date}</td>
                     <td className="px-4 py-2 text-sm text-gray-700">{b.booking_time}</td>
-                    <td className="px-4 py-2 text-sm text-gray-700">{b.notes || '—'}</td>
+                    <td className="px-4 py-2 text-sm text-gray-700">{b.notes || 'â€”'}</td>
                     <td className="px-4 py-2 text-sm text-gray-700">
                       {editingId === b.id ? (
                         <div className="flex items-center space-x-2">
@@ -356,7 +356,7 @@ export const AdminPortal: React.FC = () => {
                         </div>
                       ) : (
                         <div className="flex items-center space-x-2">
-                          <span>{b.price !== undefined && b.price !== null ? parseFloat(b.price as any).toFixed(2) : '—'}</span>
+                          <span>{b.price !== undefined && b.price !== null ? parseFloat(b.price as any).toFixed(2) : 'â€”'}</span>
                           <button
                             onClick={() => startEditPrice(b.id, b.price)}
                             className="text-blue-600 hover:underline"
@@ -382,7 +382,7 @@ export const AdminPortal: React.FC = () => {
                       >
                         {deletingId === b.id ? (
                           <span className="flex items-center gap-1">
-                            <X size={12} className="animate-pulse" /> Canceling…
+                            <X size={12} className="animate-pulse" /> Cancelingâ€¦
                           </span>
                         ) : (
                           <span>Cancel</span>
@@ -460,7 +460,7 @@ export const AdminPortal: React.FC = () => {
   const renderOffers = () => (
     <>
       <h2 className="font-display text-3xl sm:text-4xl font-bold text-center mb-4" style={{ color: '#0f0f2d' }}>
-        Admin Portal – Services & Prices
+        Admin Portal â€“ Services & Prices
       </h2>
       <div className="max-w-2xl mx-auto mb-6">
         {/* Seed default services button */}
@@ -471,7 +471,7 @@ export const AdminPortal: React.FC = () => {
             className="flex items-center gap-2 px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed text-sm font-semibold"
           >
             <Layers size={15} />
-            {seedingOffers ? 'Adding…' : 'Seed Default Services (13 items)'}
+            {seedingOffers ? 'Addingâ€¦' : 'Seed Default Services (13 items)'}
           </button>
         </div>
         <div className="flex items-center space-x-2 mb-2">
@@ -484,7 +484,7 @@ export const AdminPortal: React.FC = () => {
           />
           <input
             type="number"
-            placeholder="Price (₹)"
+            placeholder="Price (â‚¹)"
             value={offerForm.price}
             onChange={e => setOfferForm({ ...offerForm, price: e.target.value })}
             className="w-28 px-3 py-1 border rounded"
@@ -502,7 +502,7 @@ export const AdminPortal: React.FC = () => {
         />
       </div>
       {loadingOffers ? (
-        <p className="text-center text-gray-500">Loading offers…</p>
+        <p className="text-center text-gray-500">Loading offersâ€¦</p>
       ) : offers.length === 0 ? (
         <p className="text-center text-gray-500">No offers created yet. Use "Seed Default Services" to add all 13 items!</p>
       ) : (
@@ -512,7 +512,7 @@ export const AdminPortal: React.FC = () => {
               <tr>
                 <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Title</th>
                 <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Description</th>
-                <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Price (₹)</th>
+                <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Price (â‚¹)</th>
                 <th className="px-4 py-2 text-center text-sm font-medium text-gray-600">Actions</th>
               </tr>
             </thead>
@@ -522,24 +522,24 @@ export const AdminPortal: React.FC = () => {
                   <td className="px-4 py-2 text-sm text-gray-700 font-medium">{o.title}</td>
                   <td className="px-4 py-2 text-sm text-gray-700">{o.description}</td>
                   <td className="px-4 py-2 text-sm text-gray-700 font-semibold text-pink-600">
-                    {o.price > 0 ? `₹${o.price}` : 'Custom'}
+                    {o.price > 0 ? `â‚¹${o.price}` : 'Custom'}
                   </td>
-                  <td className="px-4 py-2 text-center space-x-2">
-                    <button
-                      onClick={() => startEditOffer(o)}
-                      className="text-blue-600 hover:underline"
-                      title="Edit"
-                    >
-                      <Edit size={16} />
-                    </button>
-                    <button
-                      onClick={() => deleteOffer(o.id)}
-                      className="text-red-600 hover:underline"
-                      title="Delete"
-                    >
-                      <X size={16} />
-                    </button>
-                  </td>
+                    <td className="px-4 py-2 text-center space-x-2">
+                      <button
+                        onClick={() => startEditOffer(o)}
+                        className="text-blue-600 hover:underline inline-flex items-center"
+                        title="Edit"
+                      >
+                        <Edit size={16} className="mr-1" /> Edit
+                      </button>
+                      <button
+                        onClick={() => deleteOffer(o.id)}
+                        className="text-red-600 hover:underline inline-flex items-center ml-3"
+                        title="Delete"
+                      >
+                        <Trash2 size={16} className="mr-1" /> Delete
+                      </button>
+                    </td>
                 </tr>
               ))}
             </tbody>
