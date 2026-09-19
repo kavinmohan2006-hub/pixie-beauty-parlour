@@ -1,4 +1,4 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { supabase } from '../lib/supabase';
 import { X, Edit, Check, Phone, Plus, Layers, Download, Trash2 } from 'lucide-react';
 import { BUSINESS } from '../data/contact';
@@ -49,7 +49,7 @@ export const AdminPortal: React.FC = () => {
   const [authorized, setAuthorized] = useState(false);
   const [passwordInput, setPasswordInput] = useState('');
   const [authError, setAuthError] = useState('');
-  const [activeTab, setActiveTab] = useState<'appointments' | 'store' | 'maintenance' | 'services'>('appointments');
+  const [activeTab, setActiveTab] = useState<'appointments' | 'store' | 'maintenance' | 'services' | 'offers'>('appointments');
 
   // Booking data state
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -233,15 +233,15 @@ export const AdminPortal: React.FC = () => {
   // ---------- Render helpers ----------
   const renderTabBar = () => (
     <div className="flex space-x-2 mb-6 justify-center flex-wrap gap-y-2">
-      {(['appointments', 'store', 'maintenance', 'services'] as const).map(tab => (
-        <button
-          key={tab}
-          onClick={() => setActiveTab(tab)}
-          className={`px-4 py-2 rounded capitalize ${activeTab === tab ? 'bg-pink-600 text-white' : 'bg-gray-200 text-gray-700'}`}
-        >
-          {tab === 'services' ? 'Services & Prices' : tab}
-        </button>
-      ))}
+        {(['appointments', 'store', 'maintenance', 'services', 'offers'] as const).map(tab => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`px-4 py-2 rounded capitalize ${activeTab === tab ? 'bg-pink-600 text-white' : 'bg-gray-200 text-gray-700'}`}
+          >
+            {tab === 'services' ? 'Services & Prices' : tab === 'offers' ? 'Special Offers' : tab}
+          </button>
+        ))}
     </div>
   );
 
@@ -294,7 +294,7 @@ export const AdminPortal: React.FC = () => {
           </button>
           <div className="text-right">
             <span className="font-semibold">Total Revenue: </span>
-            <span className="text-pink-600 text-lg font-bold">â‚¹{totalRevenue.toFixed(2)}</span>
+            <span className="text-pink-600 text-lg font-bold">Rs.{totalRevenue.toFixed(2)}</span>
           </div>
         </div>
         {loading ? (
@@ -313,7 +313,7 @@ export const AdminPortal: React.FC = () => {
                   <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Date</th>
                   <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Time</th>
                   <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Message</th>
-                  <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Price (â‚¹)</th>
+                  <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Price (Rs.)</th>
                   <th className="px-4 py-2 text-center text-sm font-medium text-gray-600">Actions</th>
                 </tr>
               </thead>
@@ -484,7 +484,7 @@ export const AdminPortal: React.FC = () => {
           />
           <input
             type="number"
-            placeholder="Price (â‚¹)"
+            placeholder="Price (Rs.)"
             value={offerForm.price}
             onChange={e => setOfferForm({ ...offerForm, price: e.target.value })}
             className="w-28 px-3 py-1 border rounded"
@@ -512,17 +512,17 @@ export const AdminPortal: React.FC = () => {
               <tr>
                 <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Title</th>
                 <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Description</th>
-                <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Price (â‚¹)</th>
+                <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Price (Rs.)</th>
                 <th className="px-4 py-2 text-center text-sm font-medium text-gray-600">Actions</th>
               </tr>
             </thead>
             <tbody>
-              {offers.map(o => (
+              {offers.filter(o => !o.title.startsWith('[OFFER] ')).map(o => (
                 <tr key={o.id} className="border-t border-gray-200">
                   <td className="px-4 py-2 text-sm text-gray-700 font-medium">{o.title}</td>
                   <td className="px-4 py-2 text-sm text-gray-700">{o.description}</td>
                   <td className="px-4 py-2 text-sm text-gray-700 font-semibold text-pink-600">
-                    {o.price > 0 ? `â‚¹${o.price}` : 'Custom'}
+                    {o.price > 0 ? `Rs.${o.price}` : 'Custom'}
                   </td>
                     <td className="px-4 py-2 text-center space-x-2">
                       <button
@@ -550,38 +550,131 @@ export const AdminPortal: React.FC = () => {
   );
 
 
+  const renderSpecialOffers = () => (
+    <div className="bg-white rounded-3xl p-6 shadow-xl border border-pink-100">
+      <h3 className="text-xl font-bold mb-4">Manage Special Offers (Combos/Discounts)</h3>
+      <p className="text-gray-500 mb-6">You can add special festival offers or combo packages here. They will automatically appear on the Offers page.</p>
+      
+      <div className="mb-6 bg-pink-50 p-4 rounded-xl space-y-3">
+        <h4 className="font-semibold">Add New Offer</h4>
+        <div className="grid sm:grid-cols-3 gap-3">
+          <input 
+            type="text" 
+            placeholder="Offer Title (e.g., Diwali Combo)" 
+            value={offerForm.title.replace('[OFFER] ', '')} 
+            onChange={e => setOfferForm({...offerForm, title: '[OFFER] ' + e.target.value})} 
+            className="px-3 py-2 border rounded" 
+          />
+          <input 
+            type="number" 
+            placeholder="Combo Price (Rs.)" 
+            value={offerForm.price} 
+            onChange={e => setOfferForm({...offerForm, price: e.target.value})} 
+            className="px-3 py-2 border rounded" 
+          />
+          <button onClick={saveOffer} className="px-3 py-2 bg-pink-600 text-white rounded flex items-center justify-center">
+            <Plus size={16} className="mr-1" /> {editingOfferId ? 'Update Offer' : 'Add Offer'}
+          </button>
+        </div>
+        <textarea 
+          placeholder="Offer Description (e.g., Facial + Pedicure + Hair Spa)" 
+          value={offerForm.description} 
+          onChange={e => setOfferForm({...offerForm, description: e.target.value})} 
+          className="w-full px-3 py-2 border rounded h-20" 
+        />
+      </div>
+
+      <div className="overflow-x-auto">
+        <table className="w-full text-left border-collapse">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Offer Title</th>
+              <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Description</th>
+              <th className="px-4 py-2 text-left text-sm font-medium text-gray-600">Offer Price</th>
+              <th className="px-4 py-2 text-center text-sm font-medium text-gray-600">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {offers.filter(o => o.title.startsWith('[OFFER] ')).length === 0 ? (
+              <tr><td colSpan={4} className="text-center py-8 text-gray-500">No special offers currently active.</td></tr>
+            ) : (
+              offers.filter(o => o.title.startsWith('[OFFER] ')).map(o => (
+                <tr key={o.id} className="border-t border-gray-200">
+                  <td className="px-4 py-2 text-sm text-gray-700 font-medium">{o.title.replace('[OFFER] ', '')}</td>
+                  <td className="px-4 py-2 text-sm text-gray-700">{o.description}</td>
+                  <td className="px-4 py-2 text-sm text-gray-700 font-semibold text-pink-600">
+                    {o.price > 0 ? `Rs.${o.price}` : 'Custom'}
+                  </td>
+                  <td className="px-4 py-2 text-center space-x-2">
+                    <button onClick={() => startEditOffer(o)} className="text-blue-600 hover:underline inline-flex items-center">
+                      <Edit size={16} className="mr-1" /> Edit
+                    </button>
+                    <button onClick={() => deleteOffer(o.id)} className="text-red-600 hover:underline inline-flex items-center ml-3">
+                      <Trash2 size={16} className="mr-1" /> Delete
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+
   // ---------- Main render ----------
   if (!authorized) {
     return (
-      <section id="admin" className="py-20 bg-gray-50">
-        <div className="max-w-md mx-auto px-4">
-          <h2 className="font-display text-2xl text-center mb-6" style={{ color: '#0f0f2d' }}>Admin Login</h2>
-          <form onSubmit={handleLogin} className="space-y-4">
+      <div className="fixed inset-0 z-[100] bg-gray-900 flex items-center justify-center p-4">
+        <div className="bg-white rounded-3xl p-8 max-w-sm w-full shadow-2xl">
+          <div className="flex justify-between items-center mb-6">
+            <h2 className="text-2xl font-bold" style={{ color: '#0f0f2d', fontFamily: 'var(--font-display)' }}>Admin Login</h2>
+            <button onClick={() => window.dispatchEvent(new Event('toggleAdmin'))} className="text-gray-400 hover:text-gray-600">
+              <X size={24} />
+            </button>
+          </div>
+          
+          <form onSubmit={handleLogin}>
             <input
               type="password"
-              placeholder="Enter admin password"
+              placeholder="Enter password"
               value={passwordInput}
               onChange={e => setPasswordInput(e.target.value)}
-              className="w-full px-4 py-2 border rounded"
-              required
+              className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:border-pink-500 mb-4"
+              autoFocus
             />
-            {authError && <p className="text-red-600 text-sm text-center">{authError}</p>}
-            <button type="submit" className="w-full bg-pink-600 text-white py-2 rounded hover:bg-pink-700">Login</button>
+            {authError && <p className="text-red-500 text-sm mb-4">{authError}</p>}
+            <button type="submit" className="w-full bg-pink-600 text-white font-semibold py-3 rounded-xl hover:bg-pink-700 transition-colors">
+              Login
+            </button>
           </form>
         </div>
-      </section>
+      </div>
     );
   }
 
   return (
-    <section id="admin" className="py-20 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {renderTabBar()}
-        {activeTab === 'appointments' && renderAppointments()}
-        {activeTab === 'store' && renderStoreInfo()}
-        {activeTab === 'maintenance' && renderMaintenance()}
-        {activeTab === 'services' && renderOffers()}
-      </div>
-    </section>
+    <div className="fixed inset-0 z-[100] bg-gray-100 flex flex-col h-screen overflow-hidden">
+      <header className="bg-white border-b px-6 py-4 flex justify-between items-center flex-shrink-0">
+        <h1 className="text-xl font-bold flex items-center gap-2 text-pink-600">
+          <Layers />
+          Pixie Admin Portal
+        </h1>
+        <button onClick={() => window.dispatchEvent(new Event('toggleAdmin'))} className="text-gray-400 hover:text-gray-600 p-2 rounded-full hover:bg-gray-100">
+          <X size={24} />
+        </button>
+      </header>
+
+      <section className="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+        <div className="max-w-6xl mx-auto">
+          {renderTabBar()}
+          {activeTab === 'appointments' && renderAppointments()}
+          {activeTab === 'store' && renderStoreInfo()}
+          {activeTab === 'maintenance' && renderMaintenance()}
+          {activeTab === 'services' && renderOffers()}
+          {activeTab === 'offers' && renderSpecialOffers()}
+        </div>
+      </section>
+    </div>
   );
 };

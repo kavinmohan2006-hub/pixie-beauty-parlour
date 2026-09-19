@@ -4,12 +4,12 @@ import { getWhatsAppUrl, WHATSAPP_BRIDAL_MSG } from '../data/contact';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 
 const BRIDAL_SERVICES = [
-  { icon: Crown, label: 'Bridal Makeup', desc: 'Complete wedding day transformation', price: 'Starts ₹4,999' },
-  { icon: Sparkles, label: 'Engagement Makeup', desc: 'Glowing looks for your engagement', price: 'Starts ₹2,499' },
-  { icon: Heart, label: 'Reception Makeup', desc: 'Stunning reception night looks', price: 'Starts ₹2,999' },
-  { icon: Layers, label: 'Hair Styling', desc: 'Bridal hair for every style', price: 'Starts ₹499' },
-  { icon: Layers, label: 'Saree Draping', desc: 'Perfect draping for special occasions', price: 'Starts ₹149' },
-  { icon: Leaf, label: 'Mehendi', desc: 'Intricate bridal mehendi designs', price: 'Starts ₹199' },
+  { icon: Crown, label: 'Bridal Makeup', desc: 'Complete wedding day transformation', price: 'Starts Rs.4,999' },
+  { icon: Sparkles, label: 'Engagement Makeup', desc: 'Glowing looks for your engagement', price: 'Starts Rs.2,499' },
+  { icon: Heart, label: 'Reception Makeup', desc: 'Stunning reception night looks', price: 'Starts Rs.2,999' },
+  { icon: Layers, label: 'Hair Styling', desc: 'Bridal hair for every style', price: 'Starts Rs.499' },
+  { icon: Layers, label: 'Saree Draping', desc: 'Perfect draping for special occasions', price: 'Starts Rs.149' },
+  { icon: Leaf, label: 'Mehendi', desc: 'Intricate bridal mehendi designs', price: 'Starts Rs.199' },
 ];
 
 export const Bridal: React.FC = () => {
@@ -151,7 +151,7 @@ export const Bridal: React.FC = () => {
               }}
             >
               <p className="text-white text-sm font-bold font-display" style={{ fontFamily: 'var(--font-display)' }}>
-                ✦ Complete Bridal Package — From ₹4,999
+                ✦ Complete Bridal Package — From Rs.4,999
               </p>
             </div>
           </div>

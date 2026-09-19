@@ -8,8 +8,8 @@ export interface Service {
   description: string;
   category: string;
   icon: string; // Lucide icon name
-  price: number; // Customer happy price in ₹
-  originalPrice?: number; // Regular salon price in ₹
+  price: number; // Customer happy price in Rs.
+  originalPrice?: number; // Regular salon price in Rs.
   startingFrom?: boolean; // whether price starts from
   popular?: boolean; // highlight popular services
 }

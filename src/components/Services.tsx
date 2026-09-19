@@ -92,7 +92,7 @@ export const Services: React.FC = () => {
             return (
               <a
                 key={service.id}
-                href={getWhatsAppUrl(`Hello Pixie Beauty Parlour, I would like to book ${service.name} (₹${service.price}). Please confirm available slot.`)}
+                href={getWhatsAppUrl(`Hello Pixie Beauty Parlour, I would like to book ${service.name} (Rs.${service.price}). Please confirm available slot.`)}
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Book ${service.name}`}
@@ -143,7 +143,7 @@ export const Services: React.FC = () => {
                     className="inline-block text-white text-sm font-bold px-5 py-1.5 rounded-full"
                     style={{ background: 'linear-gradient(135deg,#e91e8c,#c2185b)', boxShadow: '0 3px 12px rgba(233,30,140,0.35)' }}
                   >
-                    ₹{service.price}
+                    Rs.{service.price}
                   </span>
                 </div>
               </a>

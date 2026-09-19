@@ -9,7 +9,7 @@ interface FormState { name:string; phone:string; whatsapp:string; service:string
 const INIT: FormState = { name:'', phone:'', whatsapp:'', service:'', date:'', time:'', message:'' };
 
 const inputBase = 'w-full px-4 py-3 rounded-xl text-sm text-gray-700 placeholder-gray-400 bg-white transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-pink-300';
-const inputStyle = { border: '1.5px solid rgba(233,30,140,0.15)' };
+const inputStyle = { border: '1.5px solid rgba(233,30Rs.40,0.15)' };
 
 export const Appointment: React.FC = () => {
   const [form, setForm]     = useState<FormState>(INIT);
@@ -35,7 +35,7 @@ export const Appointment: React.FC = () => {
       `Name: ${form.name}`,
       `Phone: ${form.phone}`,
       `WhatsApp: ${form.whatsapp || 'Same as phone'}`,
-      `Service: ${form.service || 'Not specified'}${servicePrice ? ` (₹${servicePrice})` : ''}`,
+      `Service: ${form.service || 'Not specified'}${servicePrice ? ` (Rs.${servicePrice})` : ''}`,
       `Preferred Date: ${form.date || 'Not specified'}`,
       `Preferred Time: ${form.time || 'Not specified'}`,
       `Message: ${form.message || 'No additional message'}`,
@@ -84,7 +84,7 @@ export const Appointment: React.FC = () => {
 
       {/* Decorative */}
       <div className="absolute top-0 right-0 w-96 h-96 rounded-full pointer-events-none opacity-30"
-        style={{ background: 'radial-gradient(circle,rgba(233,30,140,0.08),transparent)', transform: 'translate(40%,-40%)' }} aria-hidden="true" />
+        style={{ background: 'radial-gradient(circle,rgba(233,30Rs.40,0.08),transparent)', transform: 'translate(40%,-40%)' }} aria-hidden="true" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
@@ -106,7 +106,7 @@ export const Appointment: React.FC = () => {
           <div className={`lg:col-span-2 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'}`}>
             <div
               className="rounded-3xl overflow-hidden h-full"
-              style={{ background: 'linear-gradient(145deg,#e91e8c,#c2185b)', boxShadow: '0 32px 80px rgba(233,30,140,0.3)' }}
+              style={{ background: 'linear-gradient(145deg,#e91e8c,#c2185b)', boxShadow: '0 32px 80px rgba(233,30Rs.40,0.3)' }}
             >
               {/* Top decor */}
               <div className="absolute top-0 right-0 w-40 h-40 rounded-full opacity-10 pointer-events-none"
@@ -175,13 +175,13 @@ export const Appointment: React.FC = () => {
           <div className={`lg:col-span-3 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-8'}`}>
             <div
               className="rounded-3xl p-7 sm:p-9 h-full"
-              style={{ background: 'white', boxShadow: '0 8px 48px rgba(233,30,140,0.08)', border: '1px solid rgba(233,30,140,0.08)' }}
+              style={{ background: 'white', boxShadow: '0 8px 48px rgba(233,30Rs.40,0.08)', border: '1px solid rgba(233,30Rs.40,0.08)' }}
             >
               {done ? (
                 <div className="text-center py-14">
                   <div
                     className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-5"
-                    style={{ background: 'linear-gradient(135deg,#22c55e,#16a34a)', boxShadow: '0 12px 40px rgba(34,197,94,0.35)' }}
+                    style={{ background: 'linear-gradient(135deg,#22c55e,#16a34a)', boxShadow: '0 12px 40px rgba(34Rs.97,94,0.35)' }}
                   >
                     <CheckCircle2 size={32} color="white" />
                   </div>
@@ -240,7 +240,7 @@ export const Appointment: React.FC = () => {
                       <option value="">-- Choose a service --</option>
                       {SERVICES.map(s => (
                         <option key={s.id} value={s.name}>
-                          {s.name} — ₹{s.price}
+                          {s.name} — Rs.{s.price}
                         </option>
                       ))}
                       <option value="Other">Other / Multiple Services</option>
