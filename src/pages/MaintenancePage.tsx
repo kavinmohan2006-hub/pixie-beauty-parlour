@@ -1,29 +1,9 @@
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 import { Scissors, Clock, Phone, ExternalLink } from 'lucide-react';
-import { AdminPortal } from '../components/AdminPortal';
 import { BUSINESS } from '../data/contact';
 
 export function MaintenancePage() {
   const [hovered, setHovered] = useState(false);
-  const [showAdmin, setShowAdmin] = useState(false);
-  const clickCount = useRef(0);
-  const clickTimeout = useRef<any>(null);
-
-  const handleLogoClick = () => {
-    // Secret Admin Portal trigger (3 quick taps on the logo)
-    clickCount.current++;
-    clearTimeout(clickTimeout.current);
-
-    if (clickCount.current >= 3) {
-      setShowAdmin(prev => !prev);
-      window.dispatchEvent(new Event('toggleAdmin'));
-      clickCount.current = 0;
-    } else {
-      clickTimeout.current = setTimeout(() => {
-        clickCount.current = 0;
-      }, 1000);
-    }
-  };
 
   return (
     <div
@@ -40,13 +20,9 @@ export function MaintenancePage() {
         style={{ background: 'radial-gradient(circle, #a855f7, transparent)' }} />
 
       {/* Logo */}
-      <div 
-        className="mb-8 flex flex-col items-center cursor-pointer select-none"
-        onClick={handleLogoClick}
-        title="PIXIE"
-      >
+      <div className="mb-8 flex flex-col items-center select-none">
         <div
-          className="w-20 h-20 rounded-full flex items-center justify-center mb-4 transition-transform active:scale-95"
+          className="w-20 h-20 rounded-full flex items-center justify-center mb-4"
           style={{ background: 'linear-gradient(135deg, #ec4899, #a855f7)' }}
         >
           <Scissors size={36} color="white" />
@@ -137,8 +113,6 @@ export function MaintenancePage() {
       <p className="absolute bottom-6 text-gray-600 text-xs">
         &copy; {new Date().getFullYear()} Pixie Beauty Parlour. All rights reserved.
       </p>
-
-      {showAdmin && <AdminPortal />}
     </div>
   );
 }
